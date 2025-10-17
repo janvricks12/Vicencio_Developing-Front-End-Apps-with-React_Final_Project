@@ -20,7 +20,7 @@ function ProductList({ onHomeClick }) {
     }));
   };
 
-React.useEffect(() => {
+useEffect(() => {
     // Reset addedToCart for items that are no longer in the cart
     const currentCartNames = cartItems.map(item => item.name);
     setAddedToCart(prevState => {
