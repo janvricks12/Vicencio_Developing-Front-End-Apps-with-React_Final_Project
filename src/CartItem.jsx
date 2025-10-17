@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
+const [showComingSoon, setShowComingSoon] = useState(false);
+
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
@@ -78,7 +80,13 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        {!showComingSoon ? (
+            <button onClick={() => setShowComingSoon(true)}>Checkout</button>
+          ) : (
+            <p style={{ fontSize: '20px', color: 'green', fontWeight: 'bold' }}>
+              Coming soon!!!
+            </p>
+          )}
       </div>
     </div>
   );
