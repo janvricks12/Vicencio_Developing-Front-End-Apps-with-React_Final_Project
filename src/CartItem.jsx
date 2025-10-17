@@ -80,9 +80,9 @@ const CartItem = ({ onContinueShopping }) => {
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
         {!showComingSoon ? (
-            <button onClick={() => setShowComingSoon(true)}>Checkout</button>
+            <button className="get-started-button1" onClick={() => setShowComingSoon(true)}>Checkout</button>
           ) : (
-            <p style={{ fontSize: '20px', color: 'green', fontWeight: 'bold' }}>
+            <p className="get-started-button1" style={{ fontSize: '20px', color: 'green', fontWeight: 'bold' }}>
               Coming soon!!!
             </p>
           )}
