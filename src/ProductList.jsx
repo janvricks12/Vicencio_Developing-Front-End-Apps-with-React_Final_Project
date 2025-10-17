@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import './ProductList.css';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem, removeItem } from './CartSlice';
 import CartItem from './CartItem';
-import { useDispatch } from 'react-redux';
-import { addItem } from './CartSlice';
-import { useSelector } from 'react-redux';
+import './ProductList.css';
 
 function ProductList({ onHomeClick }) {
   const dispatch = useDispatch(); // Redux dispatch
@@ -12,7 +11,16 @@ function ProductList({ onHomeClick }) {
   const [addedToCart, setAddedToCart] = useState({});
   const cartItems = useSelector(state => state.cart.items);
 
-  React.useEffect(() => {
+  // Function to handle Add toA Cart
+  const handleAddToCart = (product) => {
+    dispatch(addItem(product)); // Add item to Redux store
+    setAddedToCart((prevState) => ({
+      ...prevState,
+      [product.name]: true, // Mark item as added
+    }));
+  };
+
+React.useEffect(() => {
     // Reset addedToCart for items that are no longer in the cart
     const currentCartNames = cartItems.map(item => item.name);
     setAddedToCart(prevState => {
@@ -25,17 +33,6 @@ function ProductList({ onHomeClick }) {
       return updated;
     });
   }, [cartItems]);
-  
-
-  // Function to handle Add toA Cart
-  const handleAddToCart = (product) => {
-    dispatch(addItem(product)); // Add item to Redux store
-    setAddedToCart((prevState) => ({
-      ...prevState,
-      [product.name]: true, // Mark item as added
-    }));
-  };
-
     const plantsArray = [
         {
             category: "Air Purifying Plants",
