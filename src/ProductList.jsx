@@ -3,14 +3,31 @@ import './ProductList.css';
 import CartItem from './CartItem';
 import { useDispatch } from 'react-redux';
 import { addItem } from './CartSlice';
+import { useSelector } from 'react-redux';
 
 function ProductList({ onHomeClick }) {
   const dispatch = useDispatch(); // Redux dispatch
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false);
   const [addedToCart, setAddedToCart] = useState({});
+  const cartItems = useSelector(state => state.cart.items);
 
-  // Function to handle Add to Cart
+  React.useEffect(() => {
+    // Reset addedToCart for items that are no longer in the cart
+    const currentCartNames = cartItems.map(item => item.name);
+    setAddedToCart(prevState => {
+      const updated = { ...prevState };
+      Object.keys(updated).forEach(name => {
+        if (!currentCartNames.includes(name)) {
+          updated[name] = false;
+        }
+      });
+      return updated;
+    });
+  }, [cartItems]);
+  
+
+  // Function to handle Add toA Cart
   const handleAddToCart = (product) => {
     dispatch(addItem(product)); // Add item to Redux store
     setAddedToCart((prevState) => ({
